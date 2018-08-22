@@ -15,6 +15,11 @@ class ConfigurationRepositoryJsonImpl implements ConfigurationRepository {
 
 	String configFilePath;
 
+	private Gson createGson() {
+		Gson gson = new GsonBuilder().serializeNulls().create();
+		return gson;
+	}
+
 	@Override
 	public boolean createOrUpdate(Configuration entity) {
 
@@ -28,11 +33,6 @@ class ConfigurationRepositoryJsonImpl implements ConfigurationRepository {
 			toReturn = false;
 		}
 		return toReturn;
-	}
-
-	private Gson createGson() {
-		Gson gson = new GsonBuilder().serializeNulls().create();
-		return gson;
 	}
 
 	@Override

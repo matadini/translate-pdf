@@ -5,12 +5,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import com.google.api.client.util.Collections2;
 import com.google.cloud.translate.Language;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -19,7 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import pl.matadini.translatepdf.Main;
 import pl.matadini.translatepdf.config.Configuration;
-import pl.matadini.translatepdf.config.ConfigurationService;
+import pl.matadini.translatepdf.config.ConfigurationHandler;
 import pl.matadini.translatepdf.gui.common.CommonUtil;
 
 public class ConfigurationPaneController extends BorderPane {
@@ -62,7 +60,7 @@ public class ConfigurationPaneController extends BorderPane {
 	}
 
 	private void fillUiUsingDataFromConfiguration() {
-		Configuration configuration = ConfigurationService.INSTANCE.getConfiguration();
+		Configuration configuration = ConfigurationHandler.INSTANCE.getConfiguration();
 		List<Language> languages = args.getLanguages();
 		if (Objects.nonNull(languages)) {
 			CommonUtil.setDefaultLanguage(comboboxSourceLanguage, configuration.getDefaultSourceLanguage(), languages);
@@ -97,17 +95,19 @@ public class ConfigurationPaneController extends BorderPane {
 
 	private void updateConfiguration() {
 		Configuration configuration = getNewConfigurationFromUi();
-		ConfigurationService.INSTANCE.update(configuration);
+		ConfigurationHandler.INSTANCE.update(configuration);
 	}
 
 	private Configuration getNewConfigurationFromUi() {
 		Configuration configuration = new Configuration();
 
 		Language selectedItemSource = comboboxSourceLanguage.getSelectionModel().getSelectedItem();
-		Optional.ofNullable(selectedItemSource).ifPresent(item -> configuration.setDefaultSourceLanguage(item.getCode()));
+		Optional.ofNullable(selectedItemSource)
+				.ifPresent(item -> configuration.setDefaultSourceLanguage(item.getCode()));
 
 		Language selectedItemTarget = comboboxTargetLanguage.getSelectionModel().getSelectedItem();
-		Optional.ofNullable(selectedItemTarget).ifPresent(item -> configuration.setDefaultTargetLanguage(item.getCode()));
+		Optional.ofNullable(selectedItemTarget)
+				.ifPresent(item -> configuration.setDefaultTargetLanguage(item.getCode()));
 
 		configuration.setGoogleCredentialsJsonPath(textFieldJsonPath.getText());
 		return configuration;
