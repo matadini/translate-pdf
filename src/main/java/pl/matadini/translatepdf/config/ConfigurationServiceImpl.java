@@ -9,7 +9,7 @@ class ConfigurationServiceImpl implements ConfigurationService {
 	private final ConfigurationRepository repository;
 
 	ConfigurationServiceImpl() {
-		String configFilePath = System.getProperty("user.home") + CONFIG_FILE_NAME;
+		String configFilePath = System.getProperty("user.home") + "//" + CONFIG_FILE_NAME;
 		repository = new ConfigurationRepositoryJsonImpl(configFilePath);
 	}
 

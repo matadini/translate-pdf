@@ -1,8 +1,10 @@
 package pl.matadini.translatepdf;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import pl.matadini.translatepdf.gui.common.CommonUtil;
 import pl.matadini.translatepdf.gui.main.MainPaneController;
 
@@ -20,16 +22,21 @@ public class Main extends Application {
 
 	private MainPaneController controller;
 
-	@Override	
+	@Override
 	public void start(Stage primaryStage) throws Exception {
 		stage = primaryStage;
-		controller = CommonUtil.loadFxml(new MainPaneController(), MainPaneController.class.getResource("MainPane.fxml"));
+		controller = CommonUtil.loadFxml(new MainPaneController(),
+				MainPaneController.class.getResource("MainPane.fxml"));
 
 		Scene value = new Scene(controller);
 		value.setOnKeyPressed(event -> {
 			controller.translate();
 		});
 		controller.bindScene(value);
+
+		primaryStage.setOnCloseRequest((WindowEvent event) -> {
+			Platform.exit();
+		});
 
 		primaryStage.setScene(value);
 		primaryStage.setWidth(1024);

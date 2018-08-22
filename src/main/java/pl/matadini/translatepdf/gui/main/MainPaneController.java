@@ -121,7 +121,7 @@ public class MainPaneController extends BorderPane {
 	}
 
 	String getSelectedTextFromPdf() {
-		String selected =  CommonConst.STRING_EMPTY; 
+		String selected = CommonConst.STRING_EMPTY;
 		if (Objects.nonNull(pdfDocumentController)) {
 			try {
 				int currentPageNumber = pdfDocumentController.getCurrentPageNumber();
@@ -278,7 +278,7 @@ public class MainPaneController extends BorderPane {
 		 * System properties
 		 */
 		Properties sysPoperties = System.getProperties();
-
+		sysPoperties.setProperty("org.icepdf.core.awtFontLoading", "true");
 		/**
 		 * IcePdf properties
 		 */
