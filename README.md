@@ -8,3 +8,4 @@ Warning!
 To property working of application, is is requied to set Google Cloud Platform json's authorization file in application settings.
 
 
+![Alt text](screen.png?raw=true "Title")
