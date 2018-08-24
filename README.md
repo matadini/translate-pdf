@@ -6,3 +6,5 @@ The main feature of app is posibility of integrating Google Translate service. J
 Warning!
 
 To property working of application, is is requied to set Google Cloud Platform json's authorization file in application settings.
+
+
