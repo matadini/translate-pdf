@@ -17,7 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import pl.matadini.translatepdf.Main;
 import pl.matadini.translatepdf.config.Configuration;
-import pl.matadini.translatepdf.config.ConfigurationHandler;
+import pl.matadini.translatepdf.config.ConfigurationService;
 import pl.matadini.translatepdf.gui.common.CommonUtil;
 
 public class ConfigurationPaneController extends BorderPane {
@@ -60,7 +60,7 @@ public class ConfigurationPaneController extends BorderPane {
 	}
 
 	private void fillUiUsingDataFromConfiguration() {
-		Configuration configuration = ConfigurationHandler.INSTANCE.getConfiguration();
+		Configuration configuration = ConfigurationService.getDefault().getConfiguration();
 		List<Language> languages = args.getLanguages();
 		if (Objects.nonNull(languages)) {
 			CommonUtil.setDefaultLanguage(comboboxSourceLanguage, configuration.getDefaultSourceLanguage(), languages);
@@ -95,7 +95,7 @@ public class ConfigurationPaneController extends BorderPane {
 
 	private void updateConfiguration() {
 		Configuration configuration = getNewConfigurationFromUi();
-		ConfigurationHandler.INSTANCE.update(configuration);
+		ConfigurationService.getDefault().update(configuration);
 	}
 
 	private Configuration getNewConfigurationFromUi() {

@@ -35,7 +35,7 @@ public class Main extends Application {
 		controller.bindScene(value);
 
 		primaryStage.setOnCloseRequest((WindowEvent event) -> {
-			Platform.exit();
+			System.exit(0);//.exit();
 		});
 
 		primaryStage.setScene(value);

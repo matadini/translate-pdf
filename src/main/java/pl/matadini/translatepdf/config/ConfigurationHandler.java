@@ -6,7 +6,7 @@ package pl.matadini.translatepdf.config;
  * @author Mateusz Iwanek
  *
  */
-public class ConfigurationHandler {
+class ConfigurationHandler {
 	public static final ConfigurationService INSTANCE = new ConfigurationServiceImpl();
 
 }

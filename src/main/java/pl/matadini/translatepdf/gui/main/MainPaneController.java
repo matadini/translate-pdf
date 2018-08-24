@@ -7,12 +7,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 
 import javax.swing.JPanel;
@@ -53,7 +51,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pl.matadini.translatepdf.Main;
 import pl.matadini.translatepdf.config.Configuration;
-import pl.matadini.translatepdf.config.ConfigurationHandler;
+import pl.matadini.translatepdf.config.ConfigurationService;
 import pl.matadini.translatepdf.gui.common.CommonConst;
 import pl.matadini.translatepdf.gui.common.CommonUtil;
 import pl.matadini.translatepdf.gui.config.ConfigurationPaneController;
@@ -187,7 +185,7 @@ public class MainPaneController extends BorderPane {
 	}
 
 	private void selectComboboxItemsUsingConfig() {
-		Configuration configuration = ConfigurationHandler.INSTANCE.getConfiguration();
+		Configuration configuration = ConfigurationService.getDefault().getConfiguration();
 		setDefaultLanguage(comboboxSource, configuration.getDefaultSourceLanguage());
 		setDefaultLanguage(comboboxTarget, configuration.getDefaultTargetLanguage());
 	}
@@ -195,7 +193,7 @@ public class MainPaneController extends BorderPane {
 	private Translate getTranslateWithAuth() {
 		Translate translate = null;
 		try {
-			Configuration configuration = ConfigurationHandler.INSTANCE.getConfiguration();
+			Configuration configuration = ConfigurationService.getDefault().getConfiguration();
 			String path = configuration.getGoogleCredentialsJsonPath();
 
 			GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream(path))
@@ -277,8 +275,15 @@ public class MainPaneController extends BorderPane {
 		/**
 		 * System properties
 		 */
+
+		// System.getProperties().put("org.icepdf.core.awtFontLoading", "true");
+
 		Properties sysPoperties = System.getProperties();
-		sysPoperties.setProperty("org.icepdf.core.awtFontLoading", "true");
+		sysPoperties.put("org.icepdf.core.awtFontLoading", "true");
+
+		sysPoperties.put("org.icepdf.core.nfont.truetype.hinting", "true");
+		sysPoperties.put("org.icepdf.core.nfont.truetype.hinting.alwayson", "true");
+
 		/**
 		 * IcePdf properties
 		 */

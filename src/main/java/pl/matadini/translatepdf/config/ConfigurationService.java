@@ -6,4 +6,8 @@ public interface ConfigurationService {
 
 	boolean update(Configuration configuration);
 
+	static ConfigurationService getDefault() {
+		return ConfigurationHandler.INSTANCE;
+	}
+
 }
